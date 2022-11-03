@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/nabee/AndroidStudioProjects/PeachyBbies/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2465" />
+        <entry key="..\:/Users/nabee/AndroidStudioProjects/PeachyBbies/app/src/main/res/drawable/edit_text_style.xml" value="0.329" />
+        <entry key="..\:/Users/nabee/AndroidStudioProjects/PeachyBbies/app/src/main/res/layout/activity_check_out.xml" value="0.15052083333333333" />
+        <entry key="..\:/Users/nabee/AndroidStudioProjects/PeachyBbies/app/src/main/res/layout/activity_home.xml" value="0.12708333333333333" />
+        <entry key="..\:/Users/nabee/AndroidStudioProjects/PeachyBbies/app/src/main/res/layout/activity_main.xml" value="0.14088541666666668" />
+        <entry key="..\:/Users/nabee/AndroidStudioProjects/PeachyBbies/app/src/main/res/layout/activity_splash.xml" value="0.35208333333333336" />
+        <entry key="..\:/Users/nabee/AndroidStudioProjects/PeachyBbies/app/src/main/res/layout/activity_working.xml" value="0.14088541666666668" />
+        <entry key="..\:/Users/nabee/AndroidStudioProjects/PeachyBbies/app/src/main/res/layout/fragment_break_time_view.xml" value="0.17421875" />
+        <entry key="..\:/Users/nabee/AndroidStudioProjects/PeachyBbies/app/src/main/res/layout/fragment_count_down.xml" value="0.15052083333333333" />
+        <entry key="..\:/Users/nabee/AndroidStudioProjects/PeachyBbies/app/src/main/res/layout/fragment_pausing_reason.xml" value="0.15052083333333333" />
+        <entry key="..\:/Users/nabee/AndroidStudioProjects/PeachyBbies/app/src/main/res/layout/fragment_start_packing.xml" value="0.14088541666666668" />
+        <entry key="..\:/Users/nabee/AndroidStudioProjects/PeachyBbies/app/src/main/res/layout/fragment_stop_watch.xml" value="0.14088541666666668" />
+        <entry key="..\:/Users/nabee/AndroidStudioProjects/PeachyBbies/app/src/main/res/layout/fragment_target_mode.xml" value="0.14088541666666668" />
+        <entry key="..\:/Users/nabee/AndroidStudioProjects/PeachyBbies/app/src/main/res/layout/fragment_target_mode_off.xml" value="0.14088541666666668" />
+        <entry key="..\:/Users/nabee/AndroidStudioProjects/PeachyBbies/app/src/main/res/layout/progress_bar.xml" value="0.16083333333333333" />
+        <entry key="..\:/Users/nabee/AndroidStudioProjects/PeachyBbies/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.2465" />
+        <entry key="..\:/Users/nabee/AndroidStudioProjects/PeachyBbies/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.2465" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>
