@@ -10,6 +10,7 @@ import androidx.appcompat.widget.SwitchCompat
 import com.android.volley.toolbox.StringRequest
 import com.google.android.material.snackbar.Snackbar
 import com.peachy.bbies.R
+import com.peachy.bbies.model.Slime
 import com.peachy.bbies.progressbar.CustomProgressBar
 import com.peachy.bbies.screens.Home
 import org.json.JSONObject
@@ -31,8 +32,8 @@ class TargetMode : Fragment() {
         view.findViewById<EditText>(R.id.packerName).setText(username)
 
         progressBar.show(requireActivity(), "Please Wait..!!")
-        val list = ArrayList<String>()
-        list.add("Choose slime")
+        val list = ArrayList<Slime>()
+        list.add(Slime(0, "Select Slime", "Select Slime"))
         val request = object : StringRequest(
             Method.POST, slimes,
             com.android.volley.Response.Listener { response ->
@@ -45,7 +46,9 @@ class TargetMode : Fragment() {
                         val id = singleObject.getString("id")
                         val name = singleObject.getString("slimeName")
                         val texture = singleObject.getString("slimeTexture")
-                        list.add("$id $name $texture")
+                        val slime = Slime(id.toInt(), name, texture)
+                        list.add(slime)
+                        list.sort()
                     }
 
                 }
