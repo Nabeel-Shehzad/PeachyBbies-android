@@ -43,7 +43,15 @@
                 android:id="@+id/shelving"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:text="Shelving Product"
+                android:text="Social media"
+                android:textSize="22sp"
+                android:textAlignment="textStart"
+                />
+            <CheckBox
+                android:id="@+id/mockups"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:text="Mock ups"
                 android:textSize="22sp"
                 android:textAlignment="textStart"
                 />

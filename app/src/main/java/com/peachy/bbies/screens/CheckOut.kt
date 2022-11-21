@@ -87,6 +87,7 @@ class CheckOut : AppCompatActivity() {
                     map[j.split("::")[0]] = j.split("::")[1]
                 }
             }
+            text.text = map["Social media"].toString() +" "+ map["Mock ups"].toString()
             progressBar.show(this, "Please Wait..!!")
             val request: StringRequest = object : StringRequest(
                 Method.POST, url,
@@ -115,7 +116,8 @@ class CheckOut : AppCompatActivity() {
                     params["bathroom_break"] = if (map["Bathroom"] == null) "0" else map["Bathroom"]!!
                     params["general_break"] = if (map["General Break"] == null) "0" else map["General Break"]!!
                     params["meal_break"] = if (map["Meal"] == null) "0" else map["Meal"]!!
-                    params["shelving_break"] = if (map["Shelving Product"] == null) "0" else map["Shelving Product"]!!
+                    params["shelving_break"] = if (map["Social Media"] == null) "0" else map["Social Media"]!!
+                    params["mockups"] = if (map["Mockups"] == null) "0" else map["Mockups"]!!
                     params["other_break"] = if (map["Other task"] == null) "0" else map["Other task"]!!
                     params["target_quota"] = target.toString()
                     params["actual_quota"] = actualPacked.text.toString()

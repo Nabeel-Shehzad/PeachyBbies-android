@@ -33,7 +33,10 @@ class PausingReason : Fragment() {
             else if (view.findViewById<CheckBox>(R.id.meal).isChecked)
                 bundle.putString("Reason","Meal")
             else if (view.findViewById<CheckBox>(R.id.shelving).isChecked)
-                bundle.putString("Reason","Shelving Product")
+                bundle.putString("Reason","Social Media")
+            else if (view.findViewById<CheckBox>(R.id.mockups).isChecked){
+                bundle.putString("Reason","Mockups")
+            }
             else
                 bundle.putString("Reason","Other task")
 

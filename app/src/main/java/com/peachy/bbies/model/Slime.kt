@@ -5,10 +5,10 @@ data class Slime(
     val name: String,
     val texture:String) : Comparable<Slime> {
     override fun compareTo(other: Slime): Int {
-        return if (this.name.compareTo(other.name) == 0) {
-            this.texture.compareTo(other.texture)
+        return if (this.name.lowercase().compareTo(other.name.lowercase()) == 0) {
+            this.texture.lowercase().compareTo(other.texture.lowercase())
         } else {
-            this.name.compareTo(other.name)
+            this.name.lowercase().compareTo(other.name.lowercase())
         }
     }
     override fun toString(): String {

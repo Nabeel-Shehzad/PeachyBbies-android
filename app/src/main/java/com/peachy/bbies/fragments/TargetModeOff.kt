@@ -49,8 +49,8 @@ class TargetModeOff : Fragment() {
                         val name = singleObject.getString("slimeName")
                         val texture = singleObject.getString("slimeTexture")
                         val slime = Slime(id.toInt(), name, texture)
-                        list.sort()
                         list.add(slime)
+                        list.sort()
                     }
 
                 }
