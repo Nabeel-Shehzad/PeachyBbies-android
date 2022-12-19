@@ -17,51 +17,13 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="vertical">
-            <CheckBox
-                android:id="@+id/bathroom"
-                android:layout_width="200dp"
+            <Spinner
+                android:id="@+id/breaks"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="Bathroom"
-                android:textAlignment="textStart"
-                android:textSize="22sp"/>
-            <CheckBox
-                android:id="@+id/generalBreak"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:text="General Break"
-                android:textSize="22sp"
-                android:textAlignment="textStart"
+                android:layout_gravity="center"
                 />
-            <CheckBox
-                android:id="@+id/meal"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:text="Meal"
-                android:textSize="22sp"
-                android:textAlignment="textStart"/>
-            <CheckBox
-                android:id="@+id/shelving"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:text="Social media"
-                android:textSize="22sp"
-                android:textAlignment="textStart"
-                />
-            <CheckBox
-                android:id="@+id/mockups"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:text="Mock ups"
-                android:textSize="22sp"
-                android:textAlignment="textStart"
-                />
-            <CheckBox
-                android:id="@+id/otherTask"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:text="Other task"
-                android:textSize="22sp"
-                android:textAlignment="textStart"/>
         </LinearLayout>
         <LinearLayout
             android:layout_weight="2"

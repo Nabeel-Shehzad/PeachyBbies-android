@@ -1,4 +1,5 @@
 package com.peachy.bbies.screens
+
 import android.content.Intent
 import android.os.Bundle
 import android.os.Environment
@@ -32,6 +33,7 @@ import java.time.temporal.ChronoUnit.MINUTES
 class CheckOut : AppCompatActivity() {
     private val progressBar = CustomProgressBar()
     val url = "https://nabeelshehzad.com/peachybbies/mobile/upload.php"
+    val breaksTaken = "https://nabeelshehzad.com/peachybbies/mobile/breaksTaken.php"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_check_out)
@@ -47,7 +49,10 @@ class CheckOut : AppCompatActivity() {
         var minute = String.format("%02d", timePacking?.split(":")?.get(1)?.toInt())
         var second = String.format("%02d", timePacking?.split(":")?.get(2)?.toInt())
 
-        var timeTaken = LocalTime.parse("$hour:$minute:$second", DateTimeFormatter.ofPattern("HH:mm:ss")).plusSeconds(2)
+        var timeTaken = LocalTime.parse(
+            "$hour:$minute:$second",
+            DateTimeFormatter.ofPattern("HH:mm:ss")
+        ).plusSeconds(2)
 
 
         val pauseTimer = intent.getStringExtra("Pause")
@@ -62,8 +67,8 @@ class CheckOut : AppCompatActivity() {
                 var s = String.format("%02d", j.split("::")[1].split(":")[2].toInt())
 
                 val t = LocalTime.parse("$h:$m:$s", DateTimeFormatter.ofPattern("HH:mm:ss"))
-                val l = (s.toLong()*1000) + (m.toLong()*60000) + (h.toLong()*3600000)
-                timeTaken = timeTaken.minus(l,ChronoUnit.MILLIS)
+                val l = (s.toLong() * 1000) + (m.toLong() * 60000) + (h.toLong() * 3600000)
+                timeTaken = timeTaken.minus(l, ChronoUnit.MILLIS)
                 value += "${timeTaken}, "
             }
         }
@@ -80,21 +85,22 @@ class CheckOut : AppCompatActivity() {
             val target = intent.getStringExtra("Target")
             val sku = intent.getStringExtra("SKU")
 
-            val map = HashMap<String,String>()
+            val map = HashMap<String, String>()
             if (pause?.isNotEmpty() == true) {
                 val list = pause.split(",")
                 for (j in list) {
                     map[j.split("::")[0]] = j.split("::")[1]
                 }
             }
-            text.text = map["Social media"].toString() +" "+ map["Mock ups"].toString()
+
             progressBar.show(this, "Please Wait..!!")
             val request: StringRequest = object : StringRequest(
                 Method.POST, url,
                 com.android.volley.Response.Listener { response ->
+                    uploadBreaks(map, packerName.toString())
                     progressBar.dialog.dismiss()
-                    Toast.makeText(this, "Submitted $response", Toast.LENGTH_LONG).show()
-                    if (response.equals("submitted",ignoreCase = true)){
+                    Toast.makeText(this, "$response", Toast.LENGTH_LONG).show()
+                    if (response.equals("submitted", ignoreCase = true)) {
                         val i = Intent(this, MainActivity::class.java)
                         i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                         startActivity(i)
@@ -113,12 +119,6 @@ class CheckOut : AppCompatActivity() {
                     params["start_time"] = startTime.toString()
                     params["end_time"] = endTime.toString()
                     params["target_working_time"] = workingTime.toString()
-                    params["bathroom_break"] = if (map["Bathroom"] == null) "0" else map["Bathroom"]!!
-                    params["general_break"] = if (map["General Break"] == null) "0" else map["General Break"]!!
-                    params["meal_break"] = if (map["Meal"] == null) "0" else map["Meal"]!!
-                    params["shelving_break"] = if (map["Social Media"] == null) "0" else map["Social Media"]!!
-                    params["mockups"] = if (map["Mockups"] == null) "0" else map["Mockups"]!!
-                    params["other_break"] = if (map["Other task"] == null) "0" else map["Other task"]!!
                     params["target_quota"] = target.toString()
                     params["actual_quota"] = actualPacked.text.toString()
                     params["sku_packed"] = sku.toString().split(" ")[0]
@@ -128,5 +128,29 @@ class CheckOut : AppCompatActivity() {
             val requestQueue = Volley.newRequestQueue(this)
             requestQueue.add(request)
         }
+    }
+
+    fun uploadBreaks(map: HashMap<String, String>, user: String) {
+        for ((key, value) in map) {
+            val request: StringRequest = object : StringRequest(
+                Method.POST, breaksTaken,
+                com.android.volley.Response.Listener { response ->
+                },
+                com.android.volley.Response.ErrorListener { error ->
+                    progressBar.dialog.dismiss()
+                }
+            ) {
+                override fun getParams(): MutableMap<String, String> {
+                    val params = HashMap<String, String>()
+                    params["break_id"] = key.split(" ")[0]
+                    params["employee_id"] = user.split(" ")[0]
+                    params["time"] = value
+                    return params
+                }
+            }
+            val requestQueue = Volley.newRequestQueue(this)
+            requestQueue.add(request)
+        }
+
     }
 }
