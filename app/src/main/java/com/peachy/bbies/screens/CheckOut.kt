@@ -142,6 +142,7 @@ class CheckOut : AppCompatActivity() {
             ) {
                 override fun getParams(): MutableMap<String, String> {
                     val params = HashMap<String, String>()
+                    params["date"] = LocalDate.now().toString()
                     params["break_id"] = key.split(" ")[0]
                     params["employee_id"] = user.split(" ")[0]
                     params["time"] = value
