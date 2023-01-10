@@ -21,7 +21,7 @@ import org.json.JSONObject
 class MainActivity : AppCompatActivity() {
     lateinit var unlockBtn: Button
     lateinit var username: Spinner
-    val usernames = "https://nabeelshehzad.com/peachybbies/mobile/users.php"
+    val usernames = "https://apptreo.com/peachybbies/mobile/users.php"
     private val progressBar = CustomProgressBar()
 
     @RequiresApi(Build.VERSION_CODES.R)

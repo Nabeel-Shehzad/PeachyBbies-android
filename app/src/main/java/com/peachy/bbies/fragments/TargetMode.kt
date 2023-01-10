@@ -17,7 +17,7 @@ import org.json.JSONObject
 
 
 class TargetMode : Fragment() {
-    val slimes = "https://nabeelshehzad.com/peachybbies/mobile/slimes.php"
+    val slimes = "https://apptreo.com/peachybbies/mobile/slimes.php"
     private val progressBar = CustomProgressBar()
 
     override fun onCreateView(

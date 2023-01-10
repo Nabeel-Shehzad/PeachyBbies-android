@@ -32,8 +32,8 @@ import java.time.temporal.ChronoUnit.MINUTES
 
 class CheckOut : AppCompatActivity() {
     private val progressBar = CustomProgressBar()
-    val url = "https://nabeelshehzad.com/peachybbies/mobile/upload.php"
-    val breaksTaken = "https://nabeelshehzad.com/peachybbies/mobile/breaksTaken.php"
+    val url = "https://apptreo.com/peachybbies/mobile/upload.php"
+    val breaksTaken = "https://apptreo.com/peachybbies/mobile/breaksTaken.php"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_check_out)

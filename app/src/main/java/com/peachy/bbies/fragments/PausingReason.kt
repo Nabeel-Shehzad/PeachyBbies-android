@@ -14,7 +14,7 @@ import org.json.JSONObject
 
 class PausingReason : Fragment() {
 
-    val breaks = "https://nabeelshehzad.com/peachybbies/mobile/breaks.php"
+    val breaks = "https://apptreo.com/peachybbies/mobile/breaks.php"
     private val progressBar = CustomProgressBar()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
