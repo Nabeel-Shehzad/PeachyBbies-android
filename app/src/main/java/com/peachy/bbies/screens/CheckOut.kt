@@ -34,6 +34,7 @@ class CheckOut : AppCompatActivity() {
     private val progressBar = CustomProgressBar()
     val url = "https://apptreo.com/peachybbies/mobile/upload.php"
     val breaksTaken = "https://apptreo.com/peachybbies/mobile/breaksTaken.php"
+    val multiplier = "https://apptreo.com/peachybbies/mobile/multiplier.php"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_check_out)
@@ -45,9 +46,9 @@ class CheckOut : AppCompatActivity() {
         val username = intent.getStringExtra("Username")
 
 
-        var hour = String.format("%02d", timePacking?.split(":")?.get(0)?.toInt())
-        var minute = String.format("%02d", timePacking?.split(":")?.get(1)?.toInt())
-        var second = String.format("%02d", timePacking?.split(":")?.get(2)?.toInt())
+        val hour = String.format("%02d", timePacking?.split(":")?.get(0)?.toInt())
+        val minute = String.format("%02d", timePacking?.split(":")?.get(1)?.toInt())
+        val second = String.format("%02d", timePacking?.split(":")?.get(2)?.toInt())
 
         var timeTaken = LocalTime.parse(
             "$hour:$minute:$second",
@@ -74,16 +75,22 @@ class CheckOut : AppCompatActivity() {
         }
         text.text = "$timeTaken hours"
 
+        val sku = intent.getStringExtra("SKU")
+
+        val multiplier = sku?.substring(sku.lastIndexOf(" ") + 1)?.toInt()
+
         checkOut.setOnClickListener {
             //if (intent.getStringExtra("Type") == "CountDown") {
-
+            val perHour = getPerHour(
+                timeTaken.toString().split(":")[0].toInt(),
+                actualPacked.text.toString().toInt(), multiplier!!
+            )
             val packerName = intent.getStringExtra("Packer Name")
             val startTime = intent.getStringExtra("Start Time")
             val endTime = intent.getStringExtra("End Time")
             val workingTime = intent.getStringExtra("Working Time")
             val pause = intent.getStringExtra("Pause")
             val target = intent.getStringExtra("Target")
-            val sku = intent.getStringExtra("SKU")
 
             val map = HashMap<String, String>()
             if (pause?.isNotEmpty() == true) {
@@ -98,6 +105,11 @@ class CheckOut : AppCompatActivity() {
                 Method.POST, url,
                 com.android.volley.Response.Listener { response ->
                     uploadBreaks(map, packerName.toString())
+                    uploadMultiplier(
+                        packerName.toString().split(" ")[0], sku.toString().split(" ")[0].toInt(),
+                        timeTaken.toString().split(":")[0].toInt(),
+                        perHour
+                    )
                     progressBar.dialog.dismiss()
                     Toast.makeText(this, "$response", Toast.LENGTH_LONG).show()
                     if (response.equals("submitted", ignoreCase = true)) {
@@ -154,4 +166,34 @@ class CheckOut : AppCompatActivity() {
         }
 
     }
+
+    private fun getPerHour(hours: Int, actualPacker: Int, multiplier: Int): Int {
+        if (hours == 0)
+            return (actualPacker / 1) * (multiplier / 100)
+        return (actualPacker / hours) * (multiplier / 100)
+    }
+
+    fun uploadMultiplier(packer: String, slime: Int, hours: Int, perHour: Int) {
+        val request: StringRequest = object : StringRequest(
+            Method.POST, multiplier,
+            com.android.volley.Response.Listener { response ->
+            },
+            com.android.volley.Response.ErrorListener { error ->
+                progressBar.dialog.dismiss()
+            }
+        ) {
+            override fun getParams(): MutableMap<String, String> {
+                val params = HashMap<String, String>()
+                params["packer"] = packer
+                params["slime"] = slime.toString()
+                params["hours"] = hours.toString()
+                params["perHour"] = perHour.toString()
+                return params
+            }
+        }
+        val requestQueue = Volley.newRequestQueue(this)
+        requestQueue.add(request)
+    }
+
+
 }

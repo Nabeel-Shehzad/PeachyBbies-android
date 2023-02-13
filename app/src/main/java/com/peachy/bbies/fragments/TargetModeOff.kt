@@ -28,14 +28,14 @@ class TargetModeOff : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view =  inflater.inflate(R.layout.fragment_target_mode_off, container, false)
+        val view = inflater.inflate(R.layout.fragment_target_mode_off, container, false)
 
         val username = arguments?.getString("username")
         view.findViewById<EditText>(R.id.packerName).setText(username)
 
         progressBar.show(requireActivity(), "Please Wait..!!")
         val list = ArrayList<Slime>()
-        list.add(Slime(0, "Select Slime", "Select Slime"))
+        list.add(Slime(0, "Select Slime", "Select Slime", 0))
         val request = object : StringRequest(
             Method.POST, slimes,
             com.android.volley.Response.Listener { response ->
@@ -48,7 +48,8 @@ class TargetModeOff : Fragment() {
                         val id = singleObject.getString("id")
                         val name = singleObject.getString("slimeName")
                         val texture = singleObject.getString("slimeTexture")
-                        val slime = Slime(id.toInt(), name, texture)
+                        val multiplier = singleObject.getString("multiplier")
+                        val slime = Slime(id.toInt(), name, texture, multiplier.toInt())
                         list.add(slime)
                         list.sort()
                     }
@@ -58,7 +59,11 @@ class TargetModeOff : Fragment() {
             },
             com.android.volley.Response.ErrorListener { error ->
                 progressBar.dialog.dismiss()
-                Toast.makeText(requireActivity(), "Something went wrong try again later", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireActivity(),
+                    "Something went wrong try again later",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         ) {
             override fun getParams(): MutableMap<String, String> {
@@ -69,12 +74,19 @@ class TargetModeOff : Fragment() {
         }
         val queue = com.android.volley.toolbox.Volley.newRequestQueue(requireActivity())
         queue.add(request)
-        val adapter = android.widget.ArrayAdapter(requireActivity(), android.R.layout.simple_list_item_activated_1, list)
+        val adapter = android.widget.ArrayAdapter(
+            requireActivity(),
+            android.R.layout.simple_list_item_activated_1,
+            list
+        )
         view.findViewById<Spinner>(R.id.productSKU).adapter = adapter
 
         view.findViewById<Button>(R.id.confirm).setOnClickListener {
-            if(view.findViewById<EditText>(R.id.packerName).text.isEmpty() || view.findViewById<EditText>(R.id.packerName).text.isBlank() ||
-                view.findViewById<Spinner>(R.id.productSKU).selectedItem.toString() == "Choose slime") {
+            if (view.findViewById<EditText>(R.id.packerName).text.isEmpty() || view.findViewById<EditText>(
+                    R.id.packerName
+                ).text.isBlank() ||
+                view.findViewById<Spinner>(R.id.productSKU).selectedItem.toString() == "Choose slime"
+            ) {
                 activity?.let {
                     Snackbar.make(
                         it.findViewById(android.R.id.content),
@@ -82,7 +94,7 @@ class TargetModeOff : Fragment() {
                         Snackbar.LENGTH_LONG
                     ).show()
                 }
-            }else{
+            } else {
                 val bundle = Bundle()
                 bundle.putString("Target", "OFF")
                 bundle.putString(

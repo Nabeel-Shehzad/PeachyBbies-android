@@ -25,7 +25,7 @@ class TargetMode : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view =  inflater.inflate(R.layout.fragment_target_mode, container, false)
+        val view = inflater.inflate(R.layout.fragment_target_mode, container, false)
         val username = arguments?.getString("username")
 
         //set text to packerName
@@ -33,7 +33,7 @@ class TargetMode : Fragment() {
 
         progressBar.show(requireActivity(), "Please Wait..!!")
         val list = ArrayList<Slime>()
-        list.add(Slime(0, "Select Slime", "Select Slime"))
+        list.add(Slime(0, "Select Slime", "Select Slime", 0))
         val request = object : StringRequest(
             Method.POST, slimes,
             com.android.volley.Response.Listener { response ->
@@ -46,7 +46,8 @@ class TargetMode : Fragment() {
                         val id = singleObject.getString("id")
                         val name = singleObject.getString("slimeName")
                         val texture = singleObject.getString("slimeTexture")
-                        val slime = Slime(id.toInt(), name, texture)
+                        val multiplier = singleObject.getString("multiplier")
+                        val slime = Slime(id.toInt(), name, texture, multiplier.toInt())
                         list.add(slime)
                         list.sort()
                     }
@@ -56,7 +57,11 @@ class TargetMode : Fragment() {
             },
             com.android.volley.Response.ErrorListener { error ->
                 progressBar.dialog.dismiss()
-                Toast.makeText(requireActivity(), "Something went wrong try again later", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireActivity(),
+                    "Something went wrong try again later",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         ) {
             override fun getParams(): MutableMap<String, String> {
@@ -67,14 +72,22 @@ class TargetMode : Fragment() {
         }
         val requestQueue = com.android.volley.toolbox.Volley.newRequestQueue(requireActivity())
         requestQueue.add(request)
-        val adapter = ArrayAdapter(requireActivity(), android.R.layout.simple_list_item_activated_1, list)
+        val adapter =
+            ArrayAdapter(requireActivity(), android.R.layout.simple_list_item_activated_1, list)
         view.findViewById<Spinner>(R.id.productSKU).adapter = adapter
 
         view.findViewById<Button>(R.id.confirm).setOnClickListener {
-            if(view.findViewById<EditText>(R.id.packerName).text.isEmpty() || view.findViewById<EditText>(R.id.packerName).text.isBlank() ||
+            if (view.findViewById<EditText>(R.id.packerName).text.isEmpty() || view.findViewById<EditText>(
+                    R.id.packerName
+                ).text.isBlank() ||
                 view.findViewById<Spinner>(R.id.productSKU).selectedItem.toString() == "Choose Slime" ||
-                view.findViewById<EditText>(R.id.targetNumberPacked).text.isEmpty() || view.findViewById<EditText>(R.id.targetNumberPacked).text.isBlank() ||
-                view.findViewById<EditText>(R.id.TargetPackingTime).text.isEmpty() || view.findViewById<EditText>(R.id.TargetPackingTime).text.isBlank()) {
+                view.findViewById<EditText>(R.id.targetNumberPacked).text.isEmpty() || view.findViewById<EditText>(
+                    R.id.targetNumberPacked
+                ).text.isBlank() ||
+                view.findViewById<EditText>(R.id.TargetPackingTime).text.isEmpty() || view.findViewById<EditText>(
+                    R.id.TargetPackingTime
+                ).text.isBlank()
+            ) {
                 activity?.let {
                     Snackbar.make(
                         it.findViewById(android.R.id.content),
@@ -82,7 +95,7 @@ class TargetMode : Fragment() {
                         Snackbar.LENGTH_LONG
                     ).show()
                 }
-            }else {
+            } else {
                 val bundle = Bundle()
                 bundle.putString("Target", "ON")
                 bundle.putString(
